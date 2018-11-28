@@ -2,35 +2,61 @@ local composer = require( "composer" )
 local scene = composer.newScene()
 local centerX = display.contentCenterX 
 local centerY = display.contentCenterY 
-local bg = display.newImage("bg/bg1.jpg",centerX,centerY)
-        bg.width = centerX*2
-        bg.height = centerX*2
-local up = display.newImage("up.png",centerX,centerY-centerX*1.25)
-	up.name = "up1"
-local down = display.newImage("down.png",centerX,centerY+centerX*1.25)
-	down.name = "down1"
+local Bg   = display.newImage("bg/Bg1.png",centerX,centerY)
+
+local D151 = display.newImage("bg/D1044422151.png",centerX,centerY/2)
+	  D151.name = "D151"
+      D151.width = centerX*1.5
+      D151.height = centerY/3
+
+local D003 = display.newImage("bg/D1064423003.png",centerX,centerY/1.12)
+	  D003.name = "D003"
+      D003.width = centerX*1.5
+      D003.height = centerY/3
+
+local D014 = display.newImage("bg/D1064423014.png",centerX,centerY*1.3)
+	  D014.name = "D014"
+      D014.width = centerX*1.5
+      D014.height = centerY/3
+
+local D029 = display.newImage("bg/D1064423029.png",centerX,centerY*1.7)
+	  D029.name = "D029"
+      D029.width = centerX*1.5
+      D029.height = centerY/3
+
+
+
 
 function onTouch(event)
-        if event.phase == "began" then
-            if event.target.name == "up1" then
-				composer.gotoScene("menu14",{effect = "fade",time = 500})
-                    
-            end 
-            if event.target.name == "down1" then
-				composer.gotoScene("menu2",{effect = "fade",time = 500})       
-            end 
+    if event.phase == "began" then
+        if event.target.name == "D151" then
+			composer.gotoScene("D1044422151",{effect = "fade",time = 200}) 
         end
+        if event.target.name == "D003" then
+			composer.gotoScene("D1064423003",{effect = "fade",time = 200})       
+        end
+        if event.target.name == "D014" then
+			composer.gotoScene("D1064423014",{effect = "fade",time = 200})       
+        end 
+        if event.target.name == "D029" then
+			composer.gotoScene("D1064423029",{effect = "fade",time = 200})       
+        end  
     end
+end
 
 
 
 function scene:create( event )
     local sceneGroup = self.view
-    sceneGroup:insert(bg)
-    sceneGroup:insert(up)
-    sceneGroup:insert(down)
-    up:addEventListener( "touch", onTouch )
-    down:addEventListener( "touch", onTouch )
+    sceneGroup:insert(Bg)
+    sceneGroup:insert(D151)
+    sceneGroup:insert(D003)
+    sceneGroup:insert(D014)
+    sceneGroup:insert(D029)
+    D151:addEventListener( "touch", onTouch )
+    D003:addEventListener( "touch", onTouch )
+    D014:addEventListener( "touch", onTouch )
+    D029:addEventListener( "touch", onTouch )
 
 
  end
