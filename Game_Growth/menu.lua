@@ -4,29 +4,29 @@ local scene = composer.newScene()
 local centerX = display.contentCenterX --相對X
 local centerY = display.contentCenterY --相對Y
 --------------------------------------------------------------------
-local bg1 = display.newImage("Image/Bg/1.jpg",centerX,centerY)--載入背景1
+local bg1 = display.newImage("Image/Bg/1.png",centerX,centerY)--載入背景1
 bg1.width = centerX*2
 bg1.height = centerY*2
 bg1.alpha = 1;
 
-local bg2 = display.newImage("Image/Bg/2.jpg",centerX,centerY)--載入背景2
+local bg2 = display.newImage("Image/Bg/2.png",centerX,centerY)--載入背景2
 bg2.width = centerX*2
 bg2.height = centerY*2
 bg2.alpha = 0;
 
-local bg3 = display.newImage("Image/Bg/3.jpg",centerX,centerY)--載入背景3
+local bg3 = display.newImage("Image/Bg/3.png",centerX,centerY)--載入背景3
 bg3.width = centerX*2
 bg3.height = centerY*2
 bg3.alpha = 0;
 
-local bg4 = display.newImage("Image/Bg/4.jpg",centerX,centerY)--載入背景4
+local bg4 = display.newImage("Image/Bg/4.png",centerX,centerY)--載入背景4
 bg4.width = centerX*2
 bg4.height = centerY*2
 bg4.alpha = 0;
 
 local chara = display.newImage("Image/Chara/3.png",centerX/1.4,centerY/1.4)--載入角色
-chara.width = chara.width*2
-chara.height = chara.height*2
+chara.width = chara.width*1.2
+chara.height = chara.height*1.2
 
 
 --------------------------------------------------------------------
