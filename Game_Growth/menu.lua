@@ -47,12 +47,22 @@ function move(event)
 	  			Runtime:addEventListener("enterFrame",switchMove)
 	  			switch_bool = true
 	  			switch_RL = true
+	  			if bgInt==4 then
+	  				bgInt = 1
+	  			else
+	  				bgInt = bgInt+1
+	  			end
 	  		elseif(MouseX2<MouseX and switch_bool == false) then
 	  			print("switch2")
 	  			switch_bg.x = centerX*3
 	  			Runtime:addEventListener("enterFrame",switchMove)
 	  			switch_bool = true
 	  			switch_RL = false
+	  			if bgInt==1 then
+	  				bgInt = 4
+	  			else
+	  				bgInt = bgInt-1
+	  			end
 			end
 	  end	  
 end
@@ -66,6 +76,23 @@ function switchMove( event )
 	else
 		Runtime:removeEventListener("enterFrame",switchMove)	
 		switch_bool = false
+		print(bgInt)
+	end
+	if(switch_bg.x<=centerX+20 and switch_bg.x>=centerX-20) then
+		bg1.alpha = 0
+		bg2.alpha = 0
+		bg3.alpha = 0
+		bg4.alpha = 0
+		if(bgInt==1)then
+			bg1.alpha = 1
+		elseif(bgInt==2)then
+			bg2.alpha = 1
+		elseif(bgInt==3)then
+			bg3.alpha = 1
+		elseif(bgInt==4)then
+			bg4.alpha = 1
+		end
+
 	end
 end
 
@@ -77,13 +104,13 @@ end
 --------------------------------------------------------------------
 function scene:create( event )
     local sceneGroup = self.view
-    sceneGroup:insert(bg1)--bg加入群組
-    sceneGroup:insert(bg2)--bg加入群組
-    sceneGroup:insert(bg3)--bg加入群組
-    sceneGroup:insert(bg4)--bg加入群組
-    sceneGroup:insert(switch_bg)--bg加入群組
-    sceneGroup:insert(chara)--chara加入群組
-    switch_bg:toFront()
+    sceneGroup:insert(1,bg1)--bg加入群組
+    sceneGroup:insert(2,bg2)--bg加入群組
+    sceneGroup:insert(3,bg3)--bg加入群組
+    sceneGroup:insert(4,bg4)--bg加入群組
+    sceneGroup:insert(6,switch_bg)--bg加入群組
+    sceneGroup:insert(5,chara)--chara加入群組
+   -- switch_bg:toFront()
     Runtime:addEventListener( "touch", move )
 
 end
@@ -95,7 +122,6 @@ function scene:hide( event )
 end
 
 function scene:destroy( event )
-
 	composer.removeScene("menu")
 end
 
