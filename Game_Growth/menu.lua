@@ -3,96 +3,99 @@ local scene = composer.newScene()
 
 centerX = display.contentCenterX --相對X
 centerY = display.contentCenterY --相對Y
+
+bgInt = 0 -- 圖檔數字
+
 --------------------------------------------------------------------
-local bg1 = display.newImage("Image/Bg/1.png",centerX,centerY)--載入背景1	
-bg1.width = centerX*2
-bg1.height = centerY*2
-bg1.alpha = 1
-local bg2 = display.newImage("Image/Bg/2.png",centerX,centerY)--載入背景2
-bg2.width = centerX*2
-bg2.height = centerY*2
-bg2.alpha = 0	
-local bg3 = display.newImage("Image/Bg/3.png",centerX,centerY)--載入背景3	
-bg3.width = centerX*2
-bg3.height = centerY*2
-bg3.alpha = 0	
-local bg4 = display.newImage("Image/Bg/4.png",centerX,centerY)--載入背景4	
-bg4.width = centerX*2
-bg4.height = centerY*2
-bg4.alpha = 0
-local switch_bg = display.newImage("Image/Bg/5.png",centerX*3,centerY)--載入切換用背景
-switch_bg.width = centerX*2
-switch_bg.height = centerY*2
-switch_bg.alpha = 1
+local bg = {--載入背景
+	[0] = display.newImage("Image/Bg/1.png",centerX,centerY),
+	[1] = display.newImage("Image/Bg/2.png",centerX,centerY),
+	[2] = display.newImage("Image/Bg/3.png",centerX,centerY),
+	[3] = display.newImage("Image/Bg/4.png",centerX,centerY),
+	[4] = display.newImage("Image/Bg/5.png",centerX*3,centerY)
+}
+for i = 0 , 4 do
+	bg[i].width = centerX*2
+	bg[i].height = centerY*2
+	if i~=0 and i~=4 then
+		bg[i].alpha = 0
+	end
+end
 
-bgInt = 1
+local bleed = display.newImage("Image/Bg/5.png",centerX,centerY)
+	bleed.width = centerX*4
+	bleed.height = centerY*4
+--------------------------------------------------------------------
+local chara = {
+	[0] = display.newImage("Image/Chara/1.png",centerX/1.4,centerY/1.4),
+	[1] = display.newImage("Image/Chara/2.png",centerX*1.65,centerY/1.25),
+	[2] = display.newImage("Image/Chara/3.png",centerX/1.9,centerY*1.55),
+	[3] = display.newImage("Image/Chara/4.png",centerX/3.2,centerY/1.42)
+}
+for i = 0 , 3 do
+	if(i>1) then
+		chara[i].width = chara[i].width
+		chara[i].height = chara[i].height
+	else
+		chara[i].width = chara[i].width*1.2
+		chara[i].height = chara[i].height*1.2
+	end
 
+	if(i ~= 0) then
+	chara[i].alpha = 0
+	end
 
-
-local chara = display.newImage("Image/Chara/3.png",centerX/1.4,centerY/1.4)--載入角色
-chara.width = chara.width*1.2
-chara.height = chara.height*1.2
+end
 --------------------------------------------------------------------
 local switch_bool = false
 local switch_RL = false
+
 function move(event)
-	  if event.phase == "began"  then
+	if event.phase == "began"  then
 	  	MouseX = event.x;
-	  end
-	  if event.phase == "ended"  then
+	elseif event.phase == "ended"  then
 	  	MouseX2 = event.x;
-	  		if(MouseX2>MouseX and switch_bool == false) then
-	  			print("switch1")
-	  			switch_bg.x = centerX*-1
-	  			Runtime:addEventListener("enterFrame",switchMove)
-	  			switch_bool = true
-	  			switch_RL = true
-	  			if bgInt==4 then
-	  				bgInt = 1
-	  			else
-	  				bgInt = bgInt+1
-	  			end
-	  		elseif(MouseX2<MouseX and switch_bool == false) then
-	  			print("switch2")
-	  			switch_bg.x = centerX*3
-	  			Runtime:addEventListener("enterFrame",switchMove)
-	  			switch_bool = true
-	  			switch_RL = false
-	  			if bgInt==1 then
-	  				bgInt = 4
-	  			else
-	  				bgInt = bgInt-1
-	  			end
-			end
-	  end	  
+	  	if(MouseX2>MouseX and switch_bool == false) then
+	  		bg[4].x = centerX*-1
+	  		Runtime:addEventListener("enterFrame",switchMove)
+	  		switch_RL = true
+	  		switch_bool = true
+	  		if bgInt==3 then
+	  			bgInt = 0
+	  		else
+	  			bgInt = bgInt+1
+	  		end
+
+	  	elseif(MouseX2<MouseX and switch_bool == false) then
+	  		bg[4].x = centerX*3
+	  		Runtime:addEventListener("enterFrame",switchMove)
+	  		switch_RL = false
+	  		switch_bool = true
+	  		if bgInt==0 then
+	  			bgInt = 3
+	  		else
+	  			bgInt = bgInt-1
+	  		end
+		end
+	end	  
 end
 
-
 function switchMove( event )
-	if(switch_bg.x<centerX*3 and switch_RL == true) then
-			switch_bg.x = switch_bg.x + 100
-	elseif(switch_bg.x>centerX*-1 and switch_RL == false) then
-			switch_bg.x = switch_bg.x - 100
+	if(bg[4].x<centerX*3 and switch_RL == true) then
+			bg[4].x = bg[4].x + 100
+	elseif(bg[4].x>centerX*-1 and switch_RL == false) then
+			bg[4].x = bg[4].x - 100
 	else
 		Runtime:removeEventListener("enterFrame",switchMove)	
 		switch_bool = false
-		print(bgInt)
 	end
-	if(switch_bg.x<=centerX+20 and switch_bg.x>=centerX-20) then
-		bg1.alpha = 0
-		bg2.alpha = 0
-		bg3.alpha = 0
-		bg4.alpha = 0
-		if(bgInt==1)then
-			bg1.alpha = 1
-		elseif(bgInt==2)then
-			bg2.alpha = 1
-		elseif(bgInt==3)then
-			bg3.alpha = 1
-		elseif(bgInt==4)then
-			bg4.alpha = 1
+	if(bg[4].x<=centerX+20 and bg[4].x>=centerX-20) then		
+		for i=0 ,3 do
+			bg[i].alpha = 0
+			chara[i].alpha = 0
 		end
-
+		chara[bgInt].alpha = 1
+		bg[bgInt].alpha = 1
 	end
 end
 
@@ -104,13 +107,12 @@ end
 --------------------------------------------------------------------
 function scene:create( event )
     local sceneGroup = self.view
-    sceneGroup:insert(1,bg1)--bg加入群組
-    sceneGroup:insert(2,bg2)--bg加入群組
-    sceneGroup:insert(3,bg3)--bg加入群組
-    sceneGroup:insert(4,bg4)--bg加入群組
-    sceneGroup:insert(6,switch_bg)--bg加入群組
-    sceneGroup:insert(5,chara)--chara加入群組
-   -- switch_bg:toFront()
+    sceneGroup:insert(1,bleed)
+	for i=0 , 3 do
+	sceneGroup:insert(bg[i])
+	sceneGroup:insert(chara[i])
+	end
+    sceneGroup:insert(10,bg[4])--bg加入群組
     Runtime:addEventListener( "touch", move )
 
 end
