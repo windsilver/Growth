@@ -3,9 +3,9 @@ local scene = composer.newScene()
 
 centerX = display.contentCenterX --相對X
 centerY = display.contentCenterY --相對Y
-switch_chara = 0 --角色切換次數用
-bgInt = 0 -- 圖檔數字
-
+local switch_chara = 0 --角色切換次數用
+local switch_random = 0--隨機
+local bgInt = 0 -- 圖檔數字
 --------------------------------------------------------------------
 local bg = {--載入背景
 	[0] = display.newImage("Image/Bg/1.png",centerX,centerY),
@@ -95,9 +95,13 @@ function switchMove( event )
 			bg[i].alpha = 0
 			chara[i].alpha = 0
 		end
-		if(switch_chara >= 3)then
-			chara[bgInt].alpha = 1
+		if(switch_chara >= 5)then
+			switch_random = math.random(0,7)%4
 			switch_chara = 0
+			print(switch_random)
+		end
+		if bgInt==switch_random and switch_chara ~= 4 then
+			chara[bgInt].alpha = 1
 		end
 		bg[bgInt].alpha = 1
 	end
