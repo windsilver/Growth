@@ -33,6 +33,9 @@ local chara = display.newImage("Image/Chara/1.png",centerX,centerY*1.05)
 	chara.height = chara.height*1.3
 	chara.alpha = 0
 --------------------------------------------------------------------
+ local music = audio.loadStream("Image/Menu/title.mp3")
+  audio.setVolume(.5 ,{channel=1})
+--------------------------------------------------------------------
 function titleShow( event )
 	if(title_Show == 1) then
 		if(title.y>centerY/1.5)then
@@ -81,6 +84,7 @@ function startButton( event )
 		blackBox:toFront()
 		start:removeEventListener("touch",startButton)
 		Runtime:addEventListener("enterFrame",titleShow)
+		audio.fadeOut({channel=1, time=500})
 	end
 end
 --[[
@@ -103,6 +107,7 @@ function scene:create( event )
     start:addEventListener("touch",startButton)
 
     composer.removeScene("game1")
+    audio.play(music,{channel=1,loops=-1,volume = 0.5,fadein=500})
 end
 
 function scene:show( event )

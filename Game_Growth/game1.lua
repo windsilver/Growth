@@ -199,6 +199,9 @@ for i = 0 , 9 do
 	PassButton[i].alpha = 0
 end
 --------------------------------------------------------------------
+local music = audio.loadStream("Image/Menu/game1.mp3")
+  audio.setVolume(.5 ,{channel=1})
+--------------------------------------------------------------------
 
 
 function move(event)
@@ -280,7 +283,7 @@ function bgTrigger( bgt )
 	end
 	if bgt == 3 then
 		PhotoFrame.alpha = 0.1
-		PhotoFrame:addEventListener("touch",  photoUse)
+		PhotoFrame:addEventListener("touch", photoUse)
 	end
 
 
@@ -496,9 +499,13 @@ function graffitiUse( event )
 	end
 end
 
-function photoUse(every)
-	PhotoFrame:removeEventListener("touch", photoUse)
-	text_Box(15)
+function photoUse( event )
+		print("YO!!!")
+		if (event.phase == "ended") then
+			PhotoFrame:removeEventListener("touch", photoUse)
+			text_Box(15)
+		end
+
 end
 
 function text_Box( x )
@@ -576,7 +583,7 @@ end
 此為記錄用
 --]]
 		
-text_Box(9)
+text_Box(0)
 --------------------------------------------------------------------
 function scene:create( event )
     local sceneGroup = self.view
@@ -595,7 +602,7 @@ function scene:create( event )
     sceneGroup:insert(Graffiti)
     sceneGroup:insert(graffitiPuzzle)
     sceneGroup:insert(passNoteBig)
-
+    audio.play(music,{channel=1,loops=-1,volume = 0.5,fadein=500})
 
 
 
