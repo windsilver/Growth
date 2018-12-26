@@ -500,8 +500,7 @@ function graffitiUse( event )
 end
 
 function photoUse( event )
-		print("YO!!!")
-		if (event.phase == "ended") then
+		if (event.phase == "began") then
 			PhotoFrame:removeEventListener("touch", photoUse)
 			text_Box(15)
 		end
@@ -544,7 +543,7 @@ function text(event)
 		tesRe =tesRe +3
 		print(newText..'\n\n')
 		Text1.text = newText
-		timer.performWithDelay(50 , text)
+		timer.performWithDelay(10 , text)
 	else
 		tesRe = 1
 		textBox:addEventListener( "touch", nextText )
